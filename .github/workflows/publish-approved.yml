@@ -1,0 +1,19 @@
+name: Publish approved fire incidents
+
+on:
+  schedule:
+    # Same reasoning as poll-facebook.yml: GitHub throttles schedules under
+    # load, so every 5 minutes is the realistic floor.
+    - cron: '*/5 * * * *'
+  workflow_dispatch: {} # lets you trigger a run manually from the Actions tab
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run publisher
+        env:
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+        run: node scripts/publish-approved.mjs
