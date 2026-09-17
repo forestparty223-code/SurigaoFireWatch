@@ -1,0 +1,19 @@
+name: Poll Facebook Page for fire reports
+
+on:
+  schedule:
+    # GitHub throttles/delays schedules under load, so every 5 minutes is a
+    # more realistic floor than every 1 minute even though cron allows it.
+    - cron: '*/5 * * * *'
+  workflow_dispatch: {} # lets you trigger a run manually from the Actions tab
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run poller
+        env:
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+        run: node scripts/poll-facebook.mjs
