@@ -1,4 +1,3 @@
-```yaml
 name: Facebook Poll
 
 on:
@@ -34,4 +33,3 @@ jobs:
           VITE_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
           FACEBOOK_ACCESS_TOKEN: ${{ secrets.FACEBOOK_ACCESS_TOKEN }}
         run: node scripts/poll-facebook.mjs
-```
